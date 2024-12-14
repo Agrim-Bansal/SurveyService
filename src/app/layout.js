@@ -2,7 +2,7 @@ import { Quicksand } from "next/font/google";
 import "@/app/globals.css";
 import BackDrop from "@/app/ui/BackDrop";
 
-const quicksand = Quicksand();
+const quicksand = Quicksand({subsets: ['latin']});
 
 export const metadata = {
   title: "ServeyService",
