@@ -72,7 +72,7 @@ export default function Home() {
     </div>
   
     <div className="centerDisplay">
-      <InputBoxCard className='stage' key={inFocus} autofocus setQuestions={setQuestions} questions={questions} questionID={inFocus}>{questions[inFocus]}</InputBoxCard>
+      <InputBoxCard className='stage' key={inFocus} autoFocus={true} setQuestions={setQuestions} questions={questions} questionID={inFocus}>{questions[inFocus]}</InputBoxCard>
     </div>
 
     <div className="rightStack" onClick={rightClickHandler} >
