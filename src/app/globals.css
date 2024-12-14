@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+  transition: ease-in-out 0.5s;
+}
+:root {
+  --foreground: #ffffff;
+  --fgoreground: #171717;
+  height: 100%;
+  width: 100%;
+  font-size: 3vh;
+  background-color: #0c4328;
+  /* background: radial-gradient(circle, rgba(12,67,40,1) 60%,rgb(0, 0, 0) 100%); */
+  background: url('/background.svg');
+  background-size: cover;
+}
+
+
+body {
+  color: var(--foreground);
+  height: 100%;
+  width: 100%;
+  padding: 2%;
+}
+
+.backdrop{
+  background: rgba(202, 240, 248, 0.65);
+  /* opacity: 65%; */
+  width: 50vmax;
+  height: 100%;
+  margin: auto;
+  border-radius: 10%;
+  backdrop-filter: blur(100%);
+  padding: 5%;
+}
+
+
+.heading-changeable{
+  background: none;
+  font-size: 6vh;
+  color: #000;
+  display: block;
+  margin: auto;
+  text-align: center;
+  text-decoration: underline 5px dotted #000;
+  text-decoration-skip-ink: none; 
+}
+.heading-changeable:focus{
+  outline: none;
+}
+.heading-changeable::placeholder{
+  color: #000;
+}
+
+
+.carousel{
+  margin-top: 15%;
+  display: flex;
+  width: fit-content;
+  position:relative;
+  left: 50%;
+  transform: translateX(-50%);
+  justify-content: center;
+  align-items: center;
+
+}
+
+.leftStack, .rightStack{
+  margin: 5%;
+  position: relative;
+  opacity: 90%;
+  padding: 0;
+  height: 25vh;
+  width: 20vw;
+  cursor: default;
+  /* background-color: .; */
+}
+
+.centerDisplay{
+  cursor: pointer;
+  margin: 5%;
+  padding: 0;
+  height: 37.5vh;
+  width: 30vw;
+  position: relative;
+  cursor: default;
+  opacity: 100%;
+  align-self: flex-start;
+}
+
+.card{
+  background-color: #0C120C;
+  opacity: inherit;
+  border-radius: 2vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  margin: 0;
+  font-weight: lighter;
+  overflow: scroll;
+  align-content: center;
+  transition: ease-in-out 1s;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  cursor: default;
+}
+/* 
+.stage-from-left{
+  transform: scale(1.5) translateX(16vw);
+  opacity: 100%;
+}
+.offstage-to-right{
+  transform: scale(0.667) translateX(20vw);
+  opacity: 90%;
+}
+.stage-from-right{
+  transform: scale(1.5) translateX(-16vw);
+  opacity: 90%;
+}
+.offstage-to-left{
+  transform: scale(0.667) translateX(-20vw);
+  opacity: 90%;
+} */
+
+
+.questionBox{
+  background: none;
+  color: #CAF0F8;
+  height: 100%;
+  width: 100%;
+  display: block;
+  padding: 10%;
+  margin: auto;
+  word-wrap: break-word;
+  overflow: auto;
+  resize: none;
+  text-align: center;
+  align-content: center;
+  cursor: default;
+
+
+}
+.questionBox:focus{
+  outline: none;
+}
+
