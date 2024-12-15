@@ -1,5 +1,5 @@
 
 
 export default function Heading({ children }) {
-  return <input className='heading-changeable' defaultValue="SurveyService"></input>;
+  return <input className='heading-changeable' defaultValue={children}></input>;
 }

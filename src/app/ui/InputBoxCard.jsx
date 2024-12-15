@@ -1,4 +1,4 @@
-export default function InputBoxCard({children, className, setQuestions, questions ,questionID, autoFocus}) {
+export default function InputBoxCard({children, className, setQuestions, questions ,questionID, autoFocus, onClick, totalQuestions}) {
 
 
     function inputHandler(e) {
@@ -7,5 +7,5 @@ export default function InputBoxCard({children, className, setQuestions, questio
         setQuestions(newQuestions);
     }
 
-    return <div className= {`card ${className}`}> <textarea className="questionBox" defaultValue={children} onChange={inputHandler} autoFocus={autoFocus}></textarea></div>
+    return <div className= {`card ${className}`} onClick={onClick} id={`q${questionID}`}> <textarea className={`questionBox`} defaultValue={children} onChange={inputHandler} autoFocus={autoFocus}></textarea></div>
 }
