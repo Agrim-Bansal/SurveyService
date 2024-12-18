@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 *{
 }
 :root {
@@ -280,4 +279,20 @@ input:focus{
 }
 .success{
   color:green;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 30vmin;
+  height: 30vmin;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: 
+    radial-gradient(farthest-side,#007ea7 94%,#0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%,#007ea7);
+  animation: l13 1s infinite linear;
+}
+
+@keyframes l13{ 
+  100%{transform: rotate(1turn)}
 }

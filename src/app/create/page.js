@@ -3,10 +3,7 @@ import InputBoxCard from "@/app/ui/InputBoxCard";
 import Heading from "@/app/ui/Heading";
 import {useState,  } from "react";
 import {db, getQuestionsFromFirestore, addNewSurveyToFirestore}from '@/app/firebase';
-import clsx from 'clsx';
-import { treadmill } from 'ldrs'
-
-treadmill.register()
+import clsx from 'clsx'; 
 
 
 
@@ -14,17 +11,13 @@ export default function Home() {
 
   // const initialQuestions = ['.....1', '.....2', '.....3', '.....4', '.....5', '.....6', '.....7', '.....8', '.....9', '.....10'];
   const initialQuestions = [' ']
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+
   const [questions, setQuestions] = useState(initialQuestions);
-  //eslint-disable-next-line react-hooks/rules-of-hooks
+
   const [inFocus, setInFocus] = useState(0);
-  //eslint-disable-next-line react-hooks/rules-of-hooks
   const [surveyName, setSurveyName] = useState('Survey Name');
-  //eslint-disable-next-line react-hooks/rules-of-hooks
   const [code, setCode] = useState('');
-  //eslint-disable-next-line react-hooks/rules-of-hooks
   const [finalLoading, setFinalLoading] = useState(false);
-  //eslint-disable-next-line react-hooks/rules-of-hooks
   const [message, setMessage] = useState('');
 
 
@@ -86,7 +79,7 @@ export default function Home() {
     if(questions.length===1){
       setQuestions(['']);
       setInFocus(0);
-      return;
+      return false;
     }else{
       newQuestions.splice(inFocus, 1);
     }
@@ -122,7 +115,7 @@ export default function Home() {
       return;
     }
 
-    document.querySelector('.loader').classList.remove('hidden');
+    document.querySelector('.loader-container').classList.remove('hidden');
     
     const response = await addNewSurveyToFirestore(surveyName, code, questions)
  
@@ -130,7 +123,7 @@ export default function Home() {
     if(response=='success'){
       document.querySelector('.message').classList.add('success');
       document.querySelector('.message').classList.remove('error');
-      setMessage('Survey Created Successfully. Redirection to main site in 1- seconds...');
+      setMessage('Survey Created Successfully. Redirection to main site in 10 seconds...');
       setTimeout(()=>{window.location.href = '/';}, 10000);
     } else if(response == 'Name already exists. Please try another name'){
       document.querySelector('.message').classList.add('error');
@@ -141,7 +134,7 @@ export default function Home() {
       setMessage(response);
     }
     
-    document.querySelector('.loader').classList.add('hidden');
+    document.querySelector('.loader-container').classList.add('hidden');
   }
 
 
@@ -191,12 +184,10 @@ export default function Home() {
     </div>
   </div>
   
-  <div className="promptbackdrop loader hidden">    
-    <l-treadmill
-      size="70"
-      speed="1.25" 
-      color="black" 
-    ></l-treadmill>
+  <div className="promptbackdrop loader-container hidden">    
+
+  <div className="loader"></div>
+
   </div> 
 
   </>
