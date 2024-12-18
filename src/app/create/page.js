@@ -1,7 +1,14 @@
 "use client";;
 import InputBoxCard from "@/app/ui/InputBoxCard";
 import Heading from "@/app/ui/Heading";
-import { useEffect, useState } from "react";
+import {useState,  } from "react";
+import {db, getQuestionsFromFirestore, addNewSurveyToFirestore}from '@/app/firebase';
+import clsx from 'clsx';
+import { treadmill } from 'ldrs'
+
+treadmill.register()
+
+
 
 export default function Home() {
 
@@ -11,6 +18,15 @@ export default function Home() {
   const [questions, setQuestions] = useState(initialQuestions);
   //eslint-disable-next-line react-hooks/rules-of-hooks
   const [inFocus, setInFocus] = useState(0);
+  //eslint-disable-next-line react-hooks/rules-of-hooks
+  const [surveyName, setSurveyName] = useState('Survey Name');
+  //eslint-disable-next-line react-hooks/rules-of-hooks
+  const [code, setCode] = useState('');
+  //eslint-disable-next-line react-hooks/rules-of-hooks
+  const [finalLoading, setFinalLoading] = useState(false);
+  //eslint-disable-next-line react-hooks/rules-of-hooks
+  const [message, setMessage] = useState('');
+
 
   var leftElements = [];
   if (inFocus > 0) {
@@ -97,12 +113,46 @@ export default function Home() {
       
   }
 
+  function questionSubmitHandler(){
+    setFinalLoading(true);
+  }
+
+  async function confirmHandler(){
+    if(message == 'Name already exists. Please try another name'){
+      return;
+    }
+
+    document.querySelector('.loader').classList.remove('hidden');
+    
+    const response = await addNewSurveyToFirestore(surveyName, code, questions)
+ 
+
+    if(response=='success'){
+      document.querySelector('.message').classList.add('success');
+      document.querySelector('.message').classList.remove('error');
+      setMessage('Survey Created Successfully. Redirection to main site in 1- seconds...');
+      setTimeout(()=>{window.location.href = '/';}, 10000);
+    } else if(response == 'Name already exists. Please try another name'){
+      document.querySelector('.message').classList.add('error');
+      document.querySelector('.message').classList.remove('success');
+      setMessage(response);
+    }
+    else{
+      setMessage(response);
+    }
+    
+    document.querySelector('.loader').classList.add('hidden');
+  }
+
+
+
+
 
 
   var Elements = 
   <>
 
-  <Heading>Survey Name</Heading>
+  <Heading setSurveyName={setSurveyName} setMessage={setMessage}>Survey Name</Heading>
   
   <div className='carousel'>
       {leftElements}
@@ -119,8 +169,35 @@ export default function Home() {
       <button className="button disabled">Delete</button>
     }
     
-    <button onClick={()=>{console.log(questions)}} className="button">Submit</button>
+    <button onClick={questionSubmitHandler} className="button">Submit</button>
   </div>
+  
+  <div className={clsx('promptbackdrop', 
+    {'hidden' : !finalLoading},
+  )}>
+
+    <div className="promptbox card ">
+
+      <div className="flex w-full justify-center items-center">
+        <div className="inputLabel w-max flex items-center">Set a secret code</div>
+        <input type="password" onChange={(e)=>setCode(e.target.value)} className="input code"/>
+      </div>
+        <div className="small message">{message}</div>
+
+      <div className="flex">
+        <button onClick={()=>setFinalLoading(false)} className="button">Go Back</button>
+        <button onClick={confirmHandler} className="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+  
+  <div className="promptbackdrop loader hidden">    
+    <l-treadmill
+      size="70"
+      speed="1.25" 
+      color="black" 
+    ></l-treadmill>
+  </div> 
 
   </>
 
