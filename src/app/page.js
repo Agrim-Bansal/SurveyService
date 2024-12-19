@@ -1,8 +1,9 @@
 "use client";
-import Image from "next/image";
-import InputBoxCard from "@/app/ui/InputBoxCard";
 import Link from "next/link";
 import {useState} from "react";
+import './style.css'
+import Section from "@/app/ui/Section";
+
 
 export default function Home() {
 
@@ -12,47 +13,23 @@ export default function Home() {
 
   return (
     <>
-    <h1 className="heading">SurveyService</h1>
-    <div className="container">
-    <form className="fillSurveyContainer">
-      <div className="">
-        <input type="code" className="input" placeholder="SurveyCode" required />
+      <h1 className="heading">SurveyService</h1>
+
+
+      <div className="container flex flex-col align-center">
+
+        <div className="flex flex-row justify-center align-center w-full row"> 
+          <Section type="Create A Survey" href="/create" surveyName={false} password={false}></Section>
+          <Section type = "Fill This Survey" href={"/fill"} surveyName={true} password={false}></Section>
+        </div>
+
+        <div className="flex flex-row justify-center align-center w-full row"> 
+          <Section type="View Survey Responses" href="/results" surveyName={true} password={true}></Section>
+          <Section type="Edit Survey" href="/results" surveyName={true} password={true}></Section>
+        </div>
+
       </div>
-        
-      <button className="button">
-        <Link href={`/fill?code=${fillSurveyCode}`}> Fill This Survey </Link>
-      </button> 
+      </>
 
-    </form> 
-
-    <hr />
-
-    <form className="viewSurveyResultContainer">
-      <div className="">
-        <input className="input" placeholder="SurveyCode" required onChange={()=> setViewSurveyCode(this.value)}/>
-      </div>
-      <div className="">
-        <input className="input" placeholder="Password" required onChange={()=> setViewSurveyPassword(this.value)}/>
-      </div>
-        
-      <button className="button">
-        <Link href={`/view?code=${viewSurveyCode}`}> Fill This Survey </Link>
-      </button> 
-    </form>
-
-    
-    <hr className="divider"/>
-
-    
-    <div className="createSurveyContainer">
-
-      <button className="button">
-        <Link href="/create"> Create A Survey </Link>
-      </button>
-    
-    </div>
-    
-    </div>
-    </>
   );
 }

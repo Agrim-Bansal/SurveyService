@@ -1,0 +1,51 @@
+.container{
+    margin-top: -2%;
+    height: fit-content;
+    flex-direction: column;
+    width:100vw;
+    justify-content: space-between;
+    font-size: 2.2vh;
+}
+.homecard{
+    height: 30vh;
+    width: 30vw;
+    padding: 2%;
+    position: static;
+    margin: 1.75%;
+    text-align: center;
+    background-color: #0C120C;
+    opacity: inherit;
+    border-radius: 2vh;
+    overflow: scroll;
+    align-content: center;
+    transition: ease-out 0.5s;
+
+}
+
+.field{
+    margin: 1.75% 0%;
+    /* padding: 5%; */
+    border-radius: 2vh;
+    background-color: #0C120C;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input{
+    margin: 1.75%;
+    background-color:  rgba(202, 240, 248);
+    border-radius: 2vh;
+}
+.input::placeholder{
+    text-decoration: none;
+}
+
+.label{
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+}

@@ -1,6 +1,6 @@
-export default function BackDrop({ children }) {
+export default function BackDrop({ children, expanded }) {
   return (
-    <div className="backdrop">
+    <div className={"backdrop" + (expanded ? " expanded" : "")}>
       {children}
     </div>
   );

@@ -5,9 +5,7 @@ import {useState,  } from "react";
 import {db, getQuestionsFromFirestore, addNewSurveyToFirestore}from '@/app/firebase';
 import clsx from 'clsx'; 
 
-
-
-export default function Home() {
+export default function Create() {
 
   // const initialQuestions = ['.....1', '.....2', '.....3', '.....4', '.....5', '.....6', '.....7', '.....8', '.....9', '.....10'];
   const initialQuestions = [' ']
@@ -184,6 +182,7 @@ export default function Home() {
     </div>
   </div>
   
+
   <div className="promptbackdrop loader-container hidden">    
 
   <div className="loader"></div>
