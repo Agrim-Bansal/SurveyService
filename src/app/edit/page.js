@@ -1,12 +1,12 @@
 "use client";;
 import InputBoxCard from "@/app/ui/InputBoxCard";
-import Heading from "@/app/ui/Heading";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import clsx from 'clsx'; 
 import { getSurveyFromFirestore, forceAddNewSurveyToFirestore } from "@/app/firebase";
 
 export default function Edit() {
+
     const searchParams = useSearchParams();
      
     
@@ -36,7 +36,6 @@ export default function Edit() {
 
             // console.log(data);
     });
-
     },[searchParams]);
 
 
@@ -220,7 +219,7 @@ export default function Edit() {
         </div>
     </div>
 
-
+                
     </>
 
 

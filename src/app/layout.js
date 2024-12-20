@@ -1,6 +1,7 @@
 import { Quicksand } from "next/font/google";
 import "@/app/globals.css";
 import BackDrop from "@/app/ui/BackDrop";
+import { Suspense } from "react";
 
 const quicksand = Quicksand({subsets: ['latin']});
 
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
         
       <body className={`${quicksand} antialiased`} >
         <BackDrop>
+          <Suspense>
             {children}
+          </Suspense>
         </BackDrop>
       </body>
       
