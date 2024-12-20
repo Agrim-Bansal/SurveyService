@@ -2,7 +2,7 @@
 import InputBoxCard from "@/app/ui/InputBoxCard";
 import Heading from "@/app/ui/Heading";
 import {useState,  } from "react";
-import {db, getQuestionsFromFirestore, addNewSurveyToFirestore}from '@/app/firebase';
+import {addNewSurveyToFirestore}from '@/app/firebase';
 import clsx from 'clsx'; 
 
 export default function Create() {
@@ -171,7 +171,7 @@ export default function Create() {
 
       <div className="flex w-full justify-center items-center">
         <div className="inputLabel w-max flex items-center">Set a secret code</div>
-        <input type="password" onChange={(e)=>setCode(e.target.value)} className="input code"/>
+        <input type="password" onChange={(e)=>setCode(e.target.value)} className="codeInput code"/>
       </div>
         <div className="small message">{message}</div>
 

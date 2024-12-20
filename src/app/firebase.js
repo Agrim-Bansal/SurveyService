@@ -33,14 +33,14 @@ export async function getQuestionsFromFirestore(questions, name){
 
 export async function addNewSurveyToFirestore(name, passcode, questions){
   // Add a new document with a generated id.
-  const surveyRef = doc(db, "survey", name);
+  const surveyRef = await doc(db, "survey", name);
   const docSnap = await getDoc(surveyRef);
 
   if (!docSnap.exists()) {
     
     await setDoc(surveyRef, {
       passcode: passcode,
-      question: questions
+      questions: questions
     })
     console.log("Document written with ID: ", surveyRef.id);
     return 'success';
@@ -49,8 +49,33 @@ export async function addNewSurveyToFirestore(name, passcode, questions){
     console.log('SurveyName already exists');
     return `Name already exists. Please try another name`;
   }
+}
+
+export async function forceAddNewSurveyToFirestore(name, passcode, questions){
+  // Add a new document with a generated id.
+  const surveyRef = await doc(db, "survey", name);
+  const docSnap = await getDoc(surveyRef);
+  await setDoc(surveyRef, {
+    passcode: passcode,
+    questions: questions
+  })
+  console.log("Document written with ID: ", surveyRef.id);
+  return 'success';
+}
 
 
 
 
+
+export async function getSurveyFromFirestore(name){
+  const surveyRef = doc(db, "survey", name);
+  const docSnap = await getDoc(surveyRef);
+
+  if (docSnap.exists()) {
+    console.log("Firebase js Document data:", docSnap.data());
+    return docSnap.data();
+  } else {
+    console.log("No such document!");
+    return 'no such document';
+  }
 }

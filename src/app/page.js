@@ -7,9 +7,11 @@ import Section from "@/app/ui/Section";
 
 export default function Home() {
 
-  const [fillSurveyCode, setFillSurveyCode] = useState('');
-  const [viewSurveyCode, setViewSurveyCode] = useState('');
-  const [viewSurveyPassword, setViewSurveyPassword] = useState('');
+  const fillSurveyName = useState('');
+  const viewSurveyName= useState('');
+  const viewSurveyPassword = useState('');
+  const editSurveyName = useState('');
+  const editSurveyPassword = useState('');
 
   return (
     <>
@@ -19,13 +21,13 @@ export default function Home() {
       <div className="container flex flex-col align-center">
 
         <div className="flex flex-row justify-center align-center w-full row"> 
-          <Section type="Create A Survey" href="/create" surveyName={false} password={false}></Section>
-          <Section type = "Fill This Survey" href={"/fill"} surveyName={true} password={false}></Section>
+          <Section type="Create A Survey" href="/create" reqSurveyName={false} reqPassword={false}></Section>
+          <Section type = "Fill This Survey" href={"/fill"} reqSurveyName={true} reqPassword={false} state={[fillSurveyName]}></Section>
         </div>
 
         <div className="flex flex-row justify-center align-center w-full row"> 
-          <Section type="View Survey Responses" href="/results" surveyName={true} password={true}></Section>
-          <Section type="Edit Survey" href="/results" surveyName={true} password={true}></Section>
+          <Section type="View Survey Responses" href="/results" reqSurveyName={true} reqPassword={true} state={[viewSurveyName, viewSurveyPassword]}></Section>
+          <Section type="Edit Survey" href="/edit" reqSurveyName={true} reqPassword={true} state={[editSurveyName, editSurveyPassword]}></Section>
         </div>
 
       </div>
