@@ -10,10 +10,12 @@
   height: 100%;
   width: 100%;
   font-size: 3vh;
-  background-color: #0c4328;
-  background: url('/background.svg');
-  background-size: cover;
+  background-image: url('/colorful-stingrays.svg');
+  background-size: repeat;
+  background-attachment: fixed;
 }
+
+
 
 body {
   color: var(--foreground);
@@ -32,6 +34,15 @@ body {
   padding: 1%;
 }
 
+.buyButton{
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  width: 12vw;
+  height: 6vh;
+  margin: 2%;
+}
 
 .heading-changeable{
   background: none;
@@ -314,4 +325,64 @@ input:focus{
 
 @keyframes l13{ 
   100%{transform: rotate(1turn)}
+}
+
+.home{
+  position: absolute;
+  top: 0;
+  left: 12.5vw;
+  margin: 2%;
+  cursor: pointer;
+  z-index: 10;
+  height: 7.5vmin;
+  width: 7.5vmin;
+  border-radius: 50%;
+  border: 3px solid #003249;
+}
+
+.questionLabel{
+  width: 100%;
+  text-align: center;
+  margin-top: 5%;
+  font-size: 2.5vh;
+}
+
+.responseBox{
+  background: none;
+  color: #CAF0F8;
+  width: 100%;
+  display: block;
+  padding: 5%;
+  margin: auto;
+  word-wrap: break-word;
+  overflow: auto;
+  resize: none;  
+  cursor: default;
+  font-size: 2vh;
+  height: 20vh;
+}
+.response.card{
+  align-content: normal;
+}
+.responseBox:focus{
+  outline: none;
+}
+
+.sort-options-container{
+  margin-top:4%;
+}
+
+.options-scroll{
+  overflow: scroll;
+  width: 100%;
+}
+
+
+.option{
+  flex : 0 0 15%;
+  background-color: #003249;
+  color: #CAF0F8;
+  padding: 1%;
+  border: #CAF0F8 1px solid;
+  cursor: pointer;
 }

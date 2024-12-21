@@ -1,12 +1,12 @@
 "use client";;
 import InputBoxCard from "@/app/ui/InputBoxCard";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import clsx from 'clsx'; 
 import { getSurveyFromFirestore, forceAddNewSurveyToFirestore } from "@/app/firebase";
 
 export default function Edit() {
-
+    const router = useRouter();
     const searchParams = useSearchParams();
      
     
@@ -19,6 +19,12 @@ export default function Edit() {
     const [documentFound, setDocumentFound] = useState(true);
 
     useEffect(()=>{
+        if (searchParams.get("surveyName") == ""){
+            setDocumentFound(false);
+            setQuestions([]);
+            return;
+        }
+
         getSurveyFromFirestore(searchParams.get("surveyName"))
         .then((response)=>{
             const data = response;
@@ -28,6 +34,7 @@ export default function Edit() {
                 setDocumentFound(false);
             }else if(data['passcode'] != searchParams.get('password')){
                 setPasswordCorrect(false);
+                setQuestions([]);
             }else{
                 setQuestions(data['questions']);
                 setInFocus(data['questions'].length-1);
@@ -139,8 +146,8 @@ export default function Edit() {
         if(response=='success'){
         document.querySelector('.message').classList.add('success');
         document.querySelector('.message').classList.remove('error');
-        setMessage('Survey Updated Successfully. Redirection to main site in 10 seconds...');
-        setTimeout(()=>{window.location.href = '/';}, 10000);
+        setMessage('Survey Updated Successfully. Redirection to main site in 5 seconds...');
+        setTimeout(()=>{window.location.href = '/';}, 5000);
         } else if(response == 'Name already exists. Please try another name'){
         document.querySelector('.message').classList.add('error');
         document.querySelector('.message').classList.remove('success');
@@ -175,7 +182,7 @@ export default function Edit() {
         <button className="button disabled">Delete</button>
         }
         
-        <button onClick={questionSubmitHandler} className="button">Change</button>
+        <button onClick={questionSubmitHandler} className="button">Update Survey</button>
     </div>
     
     <div className={clsx('promptbackdrop', 
@@ -185,7 +192,7 @@ export default function Edit() {
         <div className="promptbox card ">
 
         <div className="flex w-full justify-center items-center">
-            <div className="inputLabel w-max flex items-center">Change the secret code</div>
+            <div className="inputLabel w-max flex items-center">Enter new secret code</div>
             <input type="password" onChange={(e)=>setCode(e.target.value)} className="codeInput code"/>
         </div>
             <div className="small message">{message}</div>
@@ -211,15 +218,16 @@ export default function Edit() {
         <div className="promptbox card ">
 
         <div className="flex w-full justify-center items-center">
-            <div className="inputLabel w-max flex items-center error">{
+            <div className="inputLabel w-max items-center error">{
                 !passwordCorrect ? 'Incorrect Password' : 'Document Not Found'
-                }</div>
+                }
+                <button onClick={()=>router.push('/')} className="button">Go Back</button>    
+            </div>
         </div>
 
         </div>
     </div>
 
-                
     </>
 
 

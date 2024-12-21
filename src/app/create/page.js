@@ -121,8 +121,8 @@ export default function Create() {
     if(response=='success'){
       document.querySelector('.message').classList.add('success');
       document.querySelector('.message').classList.remove('error');
-      setMessage('Survey Created Successfully. Redirection to main site in 10 seconds...');
-      setTimeout(()=>{window.location.href = '/';}, 10000);
+      setMessage('Survey Created Successfully. Redirection to main site in 5 seconds...');
+      setTimeout(()=>{window.location.href = '/';}, 5000);
     } else if(response == 'Name already exists. Please try another name'){
       document.querySelector('.message').classList.add('error');
       document.querySelector('.message').classList.remove('success');

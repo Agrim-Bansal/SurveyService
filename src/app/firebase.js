@@ -25,9 +25,7 @@ export async function getQuestionsFromFirestore(questions, name){
   await setDoc(surveyRef, {
     question: questions
   }).then(() => {
-    console.log("Document written with ID: ", surveyRef.id);
   }).catch((error) => {
-    console.error("Error adding document: ", error);
   });
 }
 
@@ -42,11 +40,9 @@ export async function addNewSurveyToFirestore(name, passcode, questions){
       passcode: passcode,
       questions: questions
     })
-    console.log("Document written with ID: ", surveyRef.id);
     return 'success';
   
   }else{
-    console.log('SurveyName already exists');
     return `Name already exists. Please try another name`;
   }
 }
@@ -59,12 +55,8 @@ export async function forceAddNewSurveyToFirestore(name, passcode, questions){
     passcode: passcode,
     questions: questions
   })
-  console.log("Document written with ID: ", surveyRef.id);
   return 'success';
 }
-
-
-
 
 
 export async function getSurveyFromFirestore(name){
@@ -72,10 +64,39 @@ export async function getSurveyFromFirestore(name){
   const docSnap = await getDoc(surveyRef);
 
   if (docSnap.exists()) {
-    console.log("Firebase js Document data:", docSnap.data());
     return docSnap.data();
   } else {
-    console.log("No such document!");
+    return 'no such document';
+  }
+}
+
+export async function addSurveyResponseToFirestore(surveyName, responses, userName, userEmail){
+  // Add a new document with a generated id.
+  const surveyRef = await doc(db, "responses", userEmail+"~"+surveyName);
+
+  const docSnap = await getDoc(surveyRef);
+
+  if (docSnap.exists()) {
+    return 'already exists';
+  }else{
+    await setDoc(surveyRef, {
+      userName: userName,
+      userEmail: userEmail,
+      surveyName: surveyName,
+      responses: responses
+    })  
+  
+    return 'success';
+  }
+}
+
+export async function getSurveyResponseFromFirestore(name){
+  const surveyRef = doc(db, "responses", "Bansal~demo");
+  const docSnap = await getDoc(surveyRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
     return 'no such document';
   }
 }
