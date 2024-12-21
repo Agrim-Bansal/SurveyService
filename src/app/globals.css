@@ -379,10 +379,21 @@ input:focus{
 
 
 .option{
-  flex : 0 0 15%;
+  flex : 0 0 20%;
   background-color: #003249;
   color: #CAF0F8;
   padding: 1%;
   border: #CAF0F8 1px solid;
   cursor: pointer;
+  transition: ease-in 0.25s;
+}
+
+.option.active{
+  filter: brightness(2);
+}
+
+.responseBox.display{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

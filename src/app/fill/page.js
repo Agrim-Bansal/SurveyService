@@ -3,7 +3,7 @@ import ResponseInputBoxCard from "@/app/ui/ResponseInputBoxCard";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import clsx from 'clsx'; 
-import { getSurveyFromFirestore, addSurveyResponseToFirestore } from "@/app/firebase";
+import { getSurveyFromFirestore, addSurveyResponseToFirestore, addSurveyUserToFirestore } from "@/app/firebase";
 
 
 export default function Fill() {
@@ -95,6 +95,9 @@ export default function Fill() {
             document.querySelector('.message').classList.add('success');
             document.querySelector('.message').classList.remove('error');
             setMessage('Survey Submitted Successfully. Redirection to main site in 5 seconds...');
+
+            addSurveyUserToFirestore(searchParams.get('surveyName'), userEmail, userName);
+            
             setTimeout(()=>{window.location.href = '/';}, 5000);
         }else if(response=='already exists'){
             setMessage('You have already submitted a response to this survey');
@@ -131,7 +134,7 @@ export default function Fill() {
 
         <div className="flex w-full justify-center items-center">
             <div className="inputLabel w-max flex items-center">Name</div>
-            <input type="text" onChange={(e)=>setUserName(e.target.value)} className="codeInput code"/>
+            <input type="email" onChange={(e)=>setUserName(e.target.value)} className="codeInput code"/>
         </div>
 
         <div className="flex w-full justify-center items-center">

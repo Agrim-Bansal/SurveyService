@@ -1,7 +1,7 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, getDoc, setDoc, doc } from "firebase/firestore/lite";
+import { getFirestore, getDoc, getDocs, setDoc, doc, collection, updateDoc, arrayUnion, query, where } from "firebase/firestore/lite";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -70,9 +70,24 @@ export async function getSurveyFromFirestore(name){
   }
 }
 
+export async function getSurveyFromFirestoreSecure(name, passcode){
+  const surveyRef = doc(db, "survey", name);
+  const docSnap = await getDoc(surveyRef);
+
+  if (!docSnap.exists()) {
+    return 'no such document';
+  }else if(docSnap.data().passcode != passcode){
+    return 'Incorrect passcode';
+  }
+  else {
+    return docSnap.data();
+  }
+}
+
+
 export async function addSurveyResponseToFirestore(surveyName, responses, userName, userEmail){
   // Add a new document with a generated id.
-  const surveyRef = await doc(db, "responses", userEmail+"~"+surveyName);
+  const surveyRef = await doc(db, "responses", surveyName+"~"+userEmail);
 
   const docSnap = await getDoc(surveyRef);
 
@@ -90,13 +105,33 @@ export async function addSurveyResponseToFirestore(surveyName, responses, userNa
   }
 }
 
-export async function getSurveyResponseFromFirestore(name){
-  const surveyRef = doc(db, "responses", "Bansal~demo");
+export async function addSurveyUserToFirestore(surveyName, userEmail, userName){
+  const surveyRef = await doc(db, "survey", surveyName);
+
+  const docSnap = await getDoc(surveyRef);
+  
+  await updateDoc(surveyRef, {
+    users : arrayUnion(userEmail+"~"+userName)
+  })
+  
+}
+
+export async function getSurveyResponseFromFirestore(surveyName, userEmail){
+  const surveyRef = doc(db, "responses", surveyName+"~"+userEmail);
   const docSnap = await getDoc(surveyRef);
 
-  if (docSnap.exists()) {
-    return docSnap.data();
-  } else {
-    return 'no such document';
-  }
+  console.log(docSnap.data());
+  console.log(surveyName+"~"+userEmail);
+
+  return docSnap.data();
+}
+
+export async function getQuestionResponseFromFirestore(surveyName, index){
+  const q = query(collection(db, "responses"), where("surveyName", "==", surveyName));
+  const docSnap = await getDocs(q);
+  let responses = [];
+  docSnap.forEach((doc) => {
+    responses.push(doc.data().responses[index]);
+  });
+  return responses;
 }

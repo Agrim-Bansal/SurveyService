@@ -1,38 +1,69 @@
 "use client";;
-import ResponseInputBoxCard from "@/app/ui/ResponseInputBoxCard";
-import { useSearchParams, useRouter } from "next/navigation";
+import ResponseDisplayBoxCard from "@/app/ui/ResponseDisplayBoxCard";
+import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import clsx from 'clsx'; 
-import { getSurveyResponseFromFirestore, getSurveyFromFirestore, forceAddNewSurveyToFirestore } from "@/app/firebase";
+import { getSurveyResponseFromFirestore, getSurveyFromFirestore, getQuestionResponseFromFirestore } from "@/app/firebase";
 
 
 export default function Results() {
-    const initialQuestions = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16'];
-    const initialResponses = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16'];
 
     const params = useSearchParams();
-    const [questions, setQuestions] = useState(initialQuestions);
-    const [responses, setResponses] = useState(initialResponses);
+    const [questions, setQuestions] = useState([]);
+    const [responses, setResponses] = useState([]);
     const [inFocus, setInFocus] = useState(0);
+    const [sortBy, setSortBy] = useState('questions');
+    const [users, setUsers] = useState([]);
+    const [passwordCorrect, setPasswordCorrect] = useState(true);
+    const [documentFound, setDocumentFound] = useState(true);
+    const [activeUser, setActiveUser] = useState(0);
+    const [activeQuestion, setActiveQuestion] = useState(0);
 
+    useEffect(() => {
+        const surveyName = params.get('surveyName');
+        getSurveyFromFirestore(surveyName).then((survey) => {
+            if (survey == 'no such document') {
+                setDocumentFound(false);
+            }else if(survey == 'Incorrect passcode'){
+                setPasswordCorrect(false);
+            } 
+            else {
+                setQuestions(survey.questions);
+                setUsers(survey.users);
+                setActiveUser(0);
+            }
+        });
 
+        questionSortOptionClickHandler(0);
 
-
+    },[params]);
 
 
     var leftElements = [];
-    if (inFocus > 0) {
-        for (let i = 0; i < inFocus; i++) {
-        leftElements.push(<ResponseInputBoxCard key={questions.length*10000 + i} className="left" setQuestions={setQuestions} questions={questions} questionID={i} onClick={leftClickHandler} totalQuestions={questions.length} responses={responses} setResponses={setResponses}>{questions[i]}</ResponseInputBoxCard>);
+    var rightElements = [];
+
+    if(sortBy == 'users'){
+        if (inFocus > 0) {
+            for (let i = 0; i < inFocus; i++) {
+            leftElements.push(<ResponseDisplayBoxCard key={questions.length*10000 + i} className="left" questionID={i} onClick={leftClickHandler} body={responses[i]} heading={questions[i]} />);
+            }
+        }
+        var centerElement = <ResponseDisplayBoxCard key={questions.length*10000 + inFocus} className="center" questionID={inFocus} body={responses[inFocus]} heading={questions[inFocus]} />;
+        for (let i = inFocus+1; i < questions.length; i++) {
+            rightElements.push(<ResponseDisplayBoxCard key={questions.length*10000 + i} className="right" questionID={i} onClick={rightClickHandler} body={responses[i]} heading={questions[i]} />);
+        }
+    }else{
+        if (inFocus > 0) {
+            for (let i = 0; i < inFocus; i++) {
+            leftElements.push(<ResponseDisplayBoxCard key={users.length*10000 + i} className="left" questionID={i} onClick={leftClickHandler} body={responses[i]} heading={users[i]} />);
+            }
+        }
+        var centerElement = <ResponseDisplayBoxCard key={users.length*10000 + inFocus} className="center" questionID={inFocus} body={responses[inFocus]} heading={users[inFocus]} />;
+        for (let i = inFocus+1; i < users.length; i++) {
+            rightElements.push(<ResponseDisplayBoxCard key={users.length*10000 + i} className="right" questionID={i} onClick={rightClickHandler} body={responses[i]} heading={users[i]} />);
         }
     }
 
-    var centerElement = <ResponseInputBoxCard key={questions.length*10000 + inFocus} className="center" setQuestions={setQuestions} questions={questions} questionID={inFocus} totalQuestions={questions.length} autoFocus={true} responses={responses} setResponses={setResponses}>{questions[inFocus]}</ResponseInputBoxCard>;
-
-    var rightElements = [];
-    for (let i = inFocus+1; i < questions.length; i++) {
-        rightElements.push(<ResponseInputBoxCard key={questions.length*10000 + i} className="right" setQuestions={setQuestions} questions={questions} questionID={i} onClick={rightClickHandler} totalQuestions={questions.length} responses={responses} setResponses={setResponses}>{questions[i]}</ResponseInputBoxCard>);
-    }
     rightElements = rightElements.reverse();
 
     function leftClickHandler(e){
@@ -57,38 +88,78 @@ export default function Results() {
         setTimeout(()=> inFocus<questions.length-1 ? setInFocus(inFocus+1) : setInFocus(inFocus), 500);
     }
 
+    function sortChange(sortBy){
+        setSortBy(sortBy);
+        setInFocus(0);
+
+        if (sortBy == 'questions') {
+            questionSortOptionClickHandler(0);
+        }else{
+            userSortOptionClickHandler(0);
+        }
+    }
+
+
+    function userSortOptionClickHandler(index){
+        const userEmail = users[index].split('~')[0];
+        getSurveyResponseFromFirestore(params.get('surveyName'), userEmail ).then((data) => {
+            setResponses(data.responses);
+            setInFocus(0);
+            setActiveUser(index);
+        });
+    }
+
+    function questionSortOptionClickHandler(index){
+        getQuestionResponseFromFirestore(params.get('surveyName'), index ).then((data) => {
+            setResponses(data);
+            setInFocus(0);
+            setActiveQuestion(index);
+        });
+    }
+
+
 
     const Elements = <>
         <div className="heading-changeable">{params.get('surveyName')}</div>
 
         <div className="sort-options-container flex w-full justify-center">
-            <div className="button">Sort by Questions</div>
-            <div className="button">Sort by Users</div>
+            <div className="button" onClick={()=> sortChange('questions')}>Sort by Questions</div>
+            <div className="button" onClick={()=> sortChange('users')}>Sort by Users</div>
         </div>
 
         <div className="options-scroll flex">
-            <div className="option">Option 1</div>
-            <div className="option">Option 2</div>
-            <div className="option">Option 3</div>
-            <div className="option">Option 4</div>
-            <div className="option">Option 5</div>
-            <div className="option">Option 6</div>  
-            <div className="option">Option 7</div>
-            <div className="option">Option 8</div>
-            <div className="option">Option 9</div>
-            <div className="option">Option 10</div>
-            <div className="option">Option 11</div>
-            <div className="option">Option 12</div>
-            <div className="option">Option 13</div>
-            <div className="option">Option 14</div>
-            <div className="option">Option 15</div>
-            <div className="option">Option 16</div>
+            {
+                sortBy == 'questions' ? 
+                    questions.map((question, index) => {
+                        return <div key={index} className={clsx("option", activeQuestion==index && 'active')} onClick={()=>questionSortOptionClickHandler(index)}>Q{index+1} : {question}</div>
+                    }) 
+                :   users.map((user, index) => {
+                        return <div key={index} className={clsx("option", activeUser==index && 'active')} onClick={()=>userSortOptionClickHandler(index)}>{user}</div>
+                    })
+            }
         </div>
 
     <div className='carousel'>
         {leftElements}
         {centerElement}
         {rightElements}   
+    </div>
+
+    <div className={clsx('promptbackdrop', 
+        {'hidden' : (passwordCorrect && documentFound)},
+    )}>
+
+        <div className="promptbox card ">
+
+        <div className="flex w-full justify-center items-center">
+            <div className="inputLabel w-max items-center error">{
+                !passwordCorrect ? 'Incorrect Password' : 'Document Not Found'
+                }
+                <button onClick={()=>router.push('/')} className="button">Go Back</button>    
+            </div>
+        </div>
+
+        </div>
     </div>
 
     </>
