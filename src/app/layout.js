@@ -31,6 +31,14 @@ export default function RootLayout({ children }) {
         
         <Coffee/>
 
+        <div className="wave-container">
+          <div className="pirate-container">
+            <Image src="/pirate_ship.png" alt="pirate ship" width="100" height="100" className="pirate"/>
+          </div>
+          
+          <Image src="/wave_background1.svg" alt="wave1" width="100" height="100" className="wave wave1"/> 
+        </div>
+
 
       </body>
       

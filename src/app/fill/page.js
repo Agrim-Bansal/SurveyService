@@ -1,13 +1,13 @@
 "use client";;
 import ResponseInputBoxCard from "@/app/ui/ResponseInputBoxCard";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import clsx from 'clsx'; 
 import { getSurveyFromFirestore, addSurveyResponseToFirestore, addSurveyUserToFirestore } from "@/app/firebase";
 
 
 export default function Fill() {
-
+    const router = useRouter();
     const searchParams = useSearchParams();
     
     const [questions, setQuestions] = useState(['']);

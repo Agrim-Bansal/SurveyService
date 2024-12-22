@@ -10,11 +10,9 @@
   height: 100%;
   width: 100%;
   font-size: 3vh;
-  background-image: url('/colorful-stingrays.svg');
-  background-size: repeat;
-  background-attachment: fixed;
+  /* background: rgba(25, 164, 255, 1); */
+  background: linear-gradient(0deg, rgba(25, 164, 255) 70%, #93b5e3 100%);
 }
-
 
 
 body {
@@ -25,7 +23,7 @@ body {
 }
 
 .backdrop{
-  background: rgba(202, 240, 248, 0.50);
+  background: rgba(202, 240, 248, 0.25);
   backdrop-filter: blur(5px);
   width: 75vw;
   height: 100%;
@@ -345,6 +343,8 @@ input:focus{
   text-align: center;
   margin-top: 5%;
   font-size: 2.5vh;
+  word-wrap: break-word;
+
 }
 
 .responseBox{
@@ -385,7 +385,9 @@ input:focus{
   padding: 1%;
   border: #CAF0F8 1px solid;
   cursor: pointer;
-  transition: ease-in 0.25s;
+  transition: ease-in 0.1s;
+  font-size: 0.9em;
+  word-wrap: break-word;
 }
 
 .option.active{
@@ -396,4 +398,49 @@ input:focus{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.wave-container{
+  position: relative;
+  bottom: 0;
+  left: 0; 
+  width: 100%;
+  height: fit-content;
+  transform: translateY(-100%);
+  z-index: -1;
+}
+
+.wave{
+  width: 100%;
+}
+
+.pirate-container{
+  animation: translate 15s alternate infinite linear;
+  position: absolute;
+  height: 20vw;
+  width: 20vw;
+}
+
+.pirate{
+  width: 100%;
+  height: 100%;
+  animation: upDown 1.5s alternate infinite ease-in-out;
+}
+
+
+
+@keyframes upDown {
+  to { transform: translatey(100px);}
+}
+@keyframes translate {
+  0%{ 
+    transform: translateX(0%);
+  }
+  100%{ 
+    transform: translateX(400%);
+  }
+}
+
+.carousel.results{
+  margin-top: 2%;
 }

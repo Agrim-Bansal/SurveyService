@@ -1,13 +1,13 @@
 "use client";;
 import ResponseDisplayBoxCard from "@/app/ui/ResponseDisplayBoxCard";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import clsx from 'clsx'; 
 import { getSurveyResponseFromFirestore, getSurveyFromFirestore, getQuestionResponseFromFirestore } from "@/app/firebase";
 
 
 export default function Results() {
-
+    const router = useRouter();
     const params = useSearchParams();
     const [questions, setQuestions] = useState([]);
     const [responses, setResponses] = useState([]);
@@ -21,6 +21,12 @@ export default function Results() {
 
     useEffect(() => {
         const surveyName = params.get('surveyName');
+
+        if (params.get("surveyName") == ""){
+            setDocumentFound(false);
+            return;
+        }
+
         getSurveyFromFirestore(surveyName).then((survey) => {
             if (survey == 'no such document') {
                 setDocumentFound(false);
@@ -139,7 +145,7 @@ export default function Results() {
             }
         </div>
 
-    <div className='carousel'>
+    <div className='carousel results'>
         {leftElements}
         {centerElement}
         {rightElements}   
