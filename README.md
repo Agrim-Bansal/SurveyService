@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SurveyService
+This is a simple service that allows you to create surveys and answer them.
 
-## Getting Started
+## How to run
 
-First, run the development server:
+A demo survey has been created and populated with data.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<b>name: "demo", password: "arrr"</b>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Visit the website [https://survey-service-xi.vercel.app](https://survey-service-xi.vercel.app)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Create a survey 
+   - Set a unique survey name.
+   - Add as many questions as you want.
+   - Click on Submit
+   - Set a secret code to access the survey. (Please set this code trivial. It is NOT properly secured)
+   - Click on Confirm. The survey will be saved and you will be redirected to the home page in 5sec.
+   - Share the survey name with the people you want to answer the survey.
+- Edit a Survey
+   - Fill in the survey name and secret code for editing the survey and click the button.
+   - Edit the survey. Make any changes you want. Click on Submit.
+   - You will be asked for a new code, the code you enter now will be updated. You can chose to keep the old code. 
+- Answer a survey
+   - Fill in the survey name you want to fill and click click the button.
+   - Answer the questions and click on Submit Response.
+   - Fill your details - name and email. Click on yes.
+   - You will be redirected to the home page in 5sec.
+- View survey results
+    - Fill in the survey name and secret code for viewing the survey results and click the button.
+    - You will see the survey results.
+    - You have the option to sort by users or questions.
+    - On sort by users, you can see the responses of each user in sequence.
+    - On sort by questions, you can see the responses of all users for that questions.
 
-## Learn More
+## Screenshots
+![Image](./screenshots/ss1.png)
+![Image](./screenshots/ss2.png)
+![Image](./screenshots/ss3.png)
+![Image](./screenshots/ss4.png)
+![Image](./screenshots/ss5.png)
+![Image](./screenshots/ss6.png)
+![Image](./screenshots/ss7.png)
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
+- Frontend: React, Next.js
+- Database: Firebase Firestore
+- Hosting: Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Features
+- State management using React Context API
+- Firebase Firestore for storing survey data
+- Navigation and Image Optimization using Next.js
+- Responsive design using Tailwind CSS
+- Animations designed in CSS
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+TLDR; This is my first project with React.js, Next.js and Firebase firestore.
+This was made for HackClub HighSeas.
