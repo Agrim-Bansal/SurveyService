@@ -55,5 +55,4 @@ Visit the website [https://survey-service-xi.vercel.app](https://survey-service-
 - Responsive design using Tailwind CSS
 - Animations designed in CSS
 
-TLDR; This is my first project with React.js, Next.js and Firebase firestore.
-This was made for HackClub HighSeas.
+This is my first project with React.js, Next.js and Firebase firestore am after numerous refactorisations, redesigns, and a lot of challenges, looking back I am proud of how it turned out and how much I learned for this project.
