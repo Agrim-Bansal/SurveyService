@@ -1,5 +1,6 @@
 # SurveyService
-This is a simple service that allows you to create surveys and answer them.
+My first project with reactjs, I decided to not read docs or follow any tutorial and jump in headfirst and make something. Fight the problems that come along the way and hopefully end up with something great. That is exactly what happened and I have come out with a survey platform that allows users to make questionaires / quizzes or surveys. These can be shared easily and their responses viewed.
+I hope you like the app. I'm always open for feedback and would actually like to hear from you.
 
 ## How to run
 
@@ -55,4 +56,4 @@ Visit the website [https://survey-service-xi.vercel.app](https://survey-service-
 - Responsive design using Tailwind CSS
 - Animations designed in CSS
 
-This is my first project with React.js, Next.js and Firebase firestore am after numerous refactorisations, redesigns, and a lot of challenges, looking back I am proud of how it turned out and how much I learned for this project.
+This is my first project with React.js, Next.js and Firebase firestore and after numerous refactorisations, redesigns, and a lot of challenges, looking back I am proud of how it turned out and how much I learned from this project.
